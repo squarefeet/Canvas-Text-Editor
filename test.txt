@@ -1,0 +1,18 @@
+
+var myEditor;
+
+function makeEditor() {
+	myEditor = new TextEditor();
+	myEditor.setOptions({
+		width: window.innerWidth - 45,
+		height: window.innerHeight - 15,
+		x: 45
+	});
+	myEditor.create();
+	myEditor.getFile('http://www.codefodder.com/sandbox/editor/test.txt')
+	//myEditor.importFile('function() {\n    \n}');
+};
+
+function log(str) {
+	console.log(str);
+};

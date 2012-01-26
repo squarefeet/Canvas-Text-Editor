@@ -1,0 +1,69 @@
+TO DO LIST
+----------
+
+	UI Elements
+	-----------
+		Menubar (OO)
+	
+	Functions
+	---------
+		Line shifting (shift left/shift right)
+		Event Engine
+		Selection Engine
+		Undo Engine
+		Find/Replace
+	
+	Optimizations
+	-------------
+		--- TabXter - render only once or on change
+		Breakout UI script into separate file (colors, etc.)
+		Re-indent when tabsize is changed
+		Only detect syntax when line is changed
+	
+	Bugs
+	----
+	Last line not always drawn, and sometimes remains inaccessible
+	
+	
+	
+
+
+	/**
+	Conditions
+	----------
+	Cursor doesn't go past end of line
+	Cursor doesn't go before start of line
+
+	Insert new characters at cursor position
+	remove characters from (cursor position - 1)
+	on ENTER, split line at cursor position
+		Place cursor at beginning of split string
+
+	Arrow key up will go to end of line if previous line is longer than one above it
+	Arrow key down will go to end of line if previous line is longer than one above it
+
+	Arrow key up will stay in same X position if next line is longer or same length than one below it
+	Arrow key down will stay in same X position if next line is longer or same length than one above it.
+
+
+	LINE STRUCTURE
+	--------------
+	[
+		['a','b','c',':', ' '],
+		['f', 'u', 'n', 'c', 't']
+		...etc.
+	]
+
+
+	Character Structure
+	-------------------
+	A line such as:
+	'hello'
+	will be treated as:
+
+	'hello|'
+
+	Where '|' is the cursor. currentChar in this example will be 'o', or index 4 (base zero). So it's a look
+	behind, not a look ahead.
+
+	*/

@@ -1,0 +1,307 @@
+<html>
+	<head>
+		<title>Canvas Text</title>
+		
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				font: 12px 'Arial' sans-serif;
+				background: #eee;
+				overflow: hidden;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				user-select: none;
+			}
+			
+			a {
+				color: white;
+				text-decoration: none;
+			}
+			a:link {
+				color: white;
+			}
+			a:visited {
+				color: white;
+			}
+			a:hover {
+				background-color: blue;
+			}
+			
+			.statusBar {
+				position: fixed;
+				bottom: -3px;
+				left: 0;
+				width: 100%;
+				overflow: hidden;
+				height: 17px;
+				max-height: 17px;
+				background-image: -webkit-gradient(
+				    linear,
+				    left bottom,
+				    left top,
+				    color-stop(0, rgb(245,245,245)),
+				    color-stop(0.4, rgb(247,247,247)),
+				    color-stop(0.5, rgb(240,240,240)),
+				    color-stop(0.6, rgb(250,250,250))
+				);
+				background-image: -moz-linear-gradient(
+				    center bottom,
+				    rgb(245,245,245) 0%,
+				    rgb(247,247,247) 40%,
+				    rgb(240,240,240) 50%,
+				    rgb(250,250,250) 60%
+				);
+				z-index: 5;
+				border-top: 1px solid #aaa;
+			}
+			
+			.statusBar .lineCol {
+				display: block;
+				white-space: nowrap;
+				overflow: hidden;
+				padding: 0px 5px;
+				border-right: 1px solid #CDCDCD;
+				width: 150px;
+				max-width: 150px;
+				float: left;
+			}
+			
+			.statusBar select.tabSize {
+				max-height: 15px;
+				margin-left: 10px;
+				border: none;
+				border-radius: 0px;
+				-webkit-border-radius: 0px;
+				-webkit-appearance: none;
+				width: 20px;
+				text-align: center;
+				background: transparent;
+			}
+			
+			.statusBar span.tabSize, .statusBar a.tabSize {
+				padding: 0px 5px;
+				float: left;
+				border-right: 1px solid #CDCDCD;
+			}
+			
+			.statusBar select.functionList {
+				max-height: 15px;
+				margin-left: 10px;
+				border: none;
+				border-radius: 0px;
+				-webkit-border-radius: 0px;
+				-webkit-appearance: none;
+				text-align: center;
+				background: transparent;
+			}
+			
+			.statusBar span.functionList {
+				padding: 0px 5px;
+				float: left;
+				border-right: 1px solid #CDCDCD;
+				white-space: nowrap;
+				overflow: hidden;
+				max-width: 250px;
+			}
+			
+			
+			.gutter {
+				position: absolute;
+				left:0px;
+				max-width: 45px;
+				width: 45px;
+				height: 100%;
+				-webkit-box-sizing: border-box;
+				background: #eee;
+				-webkit-box-shadow: 1px -5px 5px #000;
+			}
+			
+			.gutter .lineNumber {
+				width: 45px;
+				text-align: center;
+				color: #999;
+				text-shadow: 0px -1px 0px #fff;
+			}
+			
+			#run {
+				position: absolute;
+				bottom: 0;
+				z-index: 5;
+				width: 50px;
+				height: 15px;
+				border-right: 1px solid #999;
+			}
+			
+			.chunkLink {
+				z-index: 999999;
+				position: absolute;
+				top: 10px;
+				left: 100px;
+			}
+			
+			.menuWrapper {
+				z-index: 999999;
+				position: absolute;
+				top: 0px;
+				left: 0px;
+				background-image: -webkit-gradient(
+				    linear,
+				    left bottom,
+				    left top,
+				    color-stop(0, rgb(245,245,245)),
+				    color-stop(0.4, rgb(247,247,247)),
+				    color-stop(0.5, rgb(240,240,240)),
+				    color-stop(0.6, rgb(250,250,250))
+				);
+				background-image: -moz-linear-gradient(
+				    center bottom,
+				    rgb(245,245,245) 0%,
+				    rgb(247,247,247) 40%,
+				    rgb(240,240,240) 50%,
+				    rgb(250,250,250) 60%
+				);
+				width: 100%;
+				border-bottom: 1px solid #ddd;
+				height: 20px;
+			}
+			.menuWrapper > a {
+				float: left;
+				display: block;
+				padding: 3px 8px;
+				color: #444;
+				font-weight: bold;
+				text-align: center;
+			}
+			.menuWrapper > a:hover, .menuWrapper .menuItemWrapper > a:hover {
+				background-color: rgba(30,30,30,0.7);
+				color: #fff;
+			}
+			
+			.menuWrapper .menuItemWrapper {
+				position: absolute;
+				top: 20px;
+				display: none;
+				background-color: rgba(255,255,255,0.8);
+				border: 1px solid #ccc;
+				margin-left: -8px;
+				padding-right: 8px;
+			}
+			
+			.menuWrapper > a:hover .menuItemWrapper {
+				display: block;
+			}
+			
+			.menuWrapper .menuItemWrapper > a {
+				display: block;
+				width: 100%;
+				text-align: left;
+				color: #444;
+				padding: 3px 0px 3px 8px;
+			}
+			
+			.findReplace {
+				width: 100%;
+				z-index: 10;
+				padding: 2px 0px 2px 49px;
+				height: 50px;
+			}
+			.findReplace input {
+				border-radius: 8px;
+				padding: 3px 10px;
+				width: 37%;
+				background-color: rgba(50,50,50, 0.8);
+				border: 1px solid #aaa;
+				margin: 4px 0 0 4px;
+				color: #fff;
+				float: left;
+				height: 28px;
+			}
+			
+			
+			.drawer {
+				position: absolute;
+				bottom: -100px;
+				left: 0px;
+				width: 100%;
+				min-height: 50px;
+				-webkit-transition: bottom 0.3s ease-in-out;
+				background: rgba(50,50,50,0.8);
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+			}
+			
+			.button {
+				
+			}
+			
+			.button.close {
+				width: 20px;
+				height: 20px;
+				min-width: 20px;
+				min-height: 20px;
+				background: url(res/img/close.png) no-repeat center center transparent;
+				float: left;
+				margin-left: 8px;
+				margin-top: 8px;
+			}
+			.button.nextMatch {
+				width: 28px;
+				height: 24px;
+				background: url(res/img/nextMatch.png) no-repeat center center transparent;
+				float: left;
+				margin-left: 4px;
+				margin-top: 6px;
+			}
+			.button.prevMatch {
+				width: 28px;
+				height: 24px;
+				background: url(res/img/prevMatch.png) no-repeat center center transparent;
+				float: left;
+				margin-left: 4px;
+				margin-top: 6px;
+			}
+			.button.replace {
+				width: 28px;
+				height: 24px;
+				background: url(res/img/replace.png) no-repeat center center transparent;
+				float: left;
+				margin-left: 8px;
+				margin-top: 6px;
+			}
+			.button.replaceAll {
+				width: 28px;
+				height: 24px;
+				background: url(res/img/replaceAll.png) no-repeat center center transparent;
+				float: left;
+				margin-left: 4px;
+				margin-top: 6px;
+			}
+			.button.search {
+				width: 28px;
+				height: 24px;
+				background: url(res/img/search.png) no-repeat center center transparent;
+				float: left;
+				margin-left: 8px;
+				margin-top: 6px;
+			}
+			
+			
+		</style>
+		
+		<script type="text/javascript" src="UI.js"></script>
+		<script type="text/javascript" src="objects.js"></script>
+		
+		<script type="text/javascript" src="Text.js"></script>
+		<script type="text/javascript" src="menu.js"></script>
+		<script type="text/javascript" src="chunker.js"></script>
+		
+	</head>
+	
+	<body onload="makeEditor();">
+		<!-- <a href="#" onclick="launchChunker();" class="chunkLink">Chunk me, baby</a> -->
+		
+	</body>
+</html>
