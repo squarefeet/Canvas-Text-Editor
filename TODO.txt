@@ -68,13 +68,4 @@ TO DO LIST
 
 	*/
 	
-	
-	
-	
-	
-	
-	
-	TEST HOOK
-	hooky hooky hooky hooky
-
-	-- TESTING COMMIT HOOK.
+Testing node commit hook.
