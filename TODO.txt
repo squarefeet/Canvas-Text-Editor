@@ -20,6 +20,7 @@ TO DO LIST
 		Re-indent when tabsize is changed
 		Only detect syntax when line is changed
 	
+
 	Bugs
 	----
 	Last line not always drawn, and sometimes remains inaccessible
