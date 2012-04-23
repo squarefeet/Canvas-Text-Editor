@@ -46,6 +46,8 @@ TO DO LIST
 	Arrow key down will stay in same X position if next line is longer or same length than one above it.
 
 
+
+
 	LINE STRUCTURE
 	--------------
 	[
